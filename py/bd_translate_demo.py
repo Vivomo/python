@@ -9,13 +9,10 @@ appid = '20160607000022958'
 secretKey = 'lCxFBKsQHEvNw7RRFapW'
 
 
-q = 'orange\napple'
-
-
-def translate_world(words, from_lang='zh', to_lang='en'):
+def translate_world(words, from_lang='en', to_lang='zh'):
     http_client = None
     salt = random.randint(32768, 65536)
-    sign = bytes(appid + q + str(salt) + secretKey, encoding='utf-8')
+    sign = bytes(appid + words + str(salt) + secretKey, encoding='utf-8')
     m1.update(sign)
     sign = m1.hexdigest()
     url = '/api/trans/vip/translate'
@@ -32,3 +29,5 @@ def translate_world(words, from_lang='zh', to_lang='en'):
     finally:
         if http_client:
             http_client.close()
+
+print(translate_world('apple\norange'))
