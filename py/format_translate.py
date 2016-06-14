@@ -7,23 +7,25 @@ lineNumExp = r'<#--\d+-->'
 commentExp = r'<#--.+?-->'
 commentStartToken = '<#--'
 commentEndToken = '-->'
-commentMarkExp = r'[<>#-]'
+# commentMarkExp = r'[<>#-]'
 prefix = r'l_'
 
 
 class Line(object):
     def __init__(self, line):
+        self.line = line
         en_arr = re.findall(EnglishExp, line)
         if en_arr:
             self.en = en_arr[0].replace('"', '')
+            self.name = 'l_'+re.sub(r'\s+', '_', self.en.lower())
         else:
             self.en = ''
-        self.name = re.sub(r'\s+', '_', self.en.lower())
+            self.name = ''
 
         comment_arr = re.findall(commentExp, line)
         if comment_arr:
             self.num = filter_comment(comment_arr[0])
-            self.ch = filter_comment(comment_arr[1].replace(commentMarkExp, ''))
+            self.ch = filter_comment(comment_arr[1])
         else:
             self.num = ''
             self.ch = ''
@@ -33,6 +35,18 @@ class Line(object):
 
     def is_legal(self):
         return self.name != ''
+
+    def to_en(self):
+        if self.is_legal():
+            return re.sub(r'l_\d+', self.name, self.line)
+        else:
+            return self.line
+
+    def to_ch(self):
+        if self.is_legal():
+            return '%s = "%s" <#--%s-->' % (self.name, self.en, self.num)
+        else:
+            return self.line
 
 
 def get_all_file(file_path):
@@ -47,16 +61,5 @@ def get_all_file(file_path):
 def filter_comment(filter_str):
     return filter_str.replace(commentStartToken, '').replace(commentEndToken, '')
 
-
-def format_line(line):
-    """
-    :line l_78543943 = "View all" <#--78543943--> <#--查看全部-->
-    :return l_view_all = "View all" <#--78543943--> <#--查看全部-->
-    """
-    en = re.findall(EnglishExp, line)
-    return en
-
-print(format_line('123 213"The Test"')[0])
-print(format_line('l_xxx'))
 
 print(Line('l_78543943 = "View all" <#--78543943--> <#--查看全部-->'))
