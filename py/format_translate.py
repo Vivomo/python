@@ -40,7 +40,7 @@ class Line(object):
         return '\t[en:%s][ch:%s][num:%s]' % (self.en, self.ch, self.num)
 
     def is_legal(self):
-        return self.name != ''
+        return self.name != '' and self.en != '' and self.ch != ''
 
     def to_en(self):
         if self.is_legal():
