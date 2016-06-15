@@ -1,13 +1,19 @@
 import os
 import re
 
-
-EnglishExp = '"[\w\s]+"'
+"""
+这里的英文可能是一句话, 可能包含- . '
+但英文会被双引号引起来, 所以正则是这样的
+"""
+EnglishExp = '".+?"'
 lineNumExp = r'<#--\d+-->'
 commentExp = r'<#--.+?-->'
 commentStartToken = '<#--'
 commentEndToken = '-->'
 # commentMarkExp = r'[<>#-]'
+enPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
+writePathZh = r'E:\git\pythonCode\test\translate\write\zh'
+writePathEn = r'E:\git\pythonCode\test\translate\write\en'
 prefix = r'l_'
 
 
@@ -38,7 +44,7 @@ class Line(object):
 
     def to_en(self):
         if self.is_legal():
-            return re.sub(r'l_\d+', self.name, self.line)
+            return '%s = "%s" <#--%s--> <#--%s-->' % (self.name, self.en, self.num, self.ch)
         else:
             return self.line
 
@@ -62,4 +68,34 @@ def filter_comment(filter_str):
     return filter_str.replace(commentStartToken, '').replace(commentEndToken, '')
 
 
-print(Line('l_78543943 = "View all" <#--78543943--> <#--查看全部-->'))
+def write_to_file(file_path, content):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write(content)
+
+
+def format_file(file_path):
+    en_lines = []
+    # zh_lines = []
+    with open(file_path, 'r', encoding='utf-8') as read_file:
+        file_name = os.path.basename(read_file.name)
+        for item in read_file.readlines():
+            try:
+                line = Line(item)
+                en_lines.append(line.to_en())
+
+            except Exception as e:
+                en_lines.append(item)
+                print(e)
+                print('error file is %s and the content of line is %s' % (file_name, item))
+            # zh_lines.append(line.to_ch())
+
+    # write_to_file(os.path.join(writePathZh, file_name), '\n'.join(zh_lines))
+    write_to_file(os.path.join(enPath, file_name), '\n'.join(en_lines))
+
+
+testFilePath = r'E:\git\pythonCode\test\translate\write\en\event_order.ftl'
+
+format_file(testFilePath)
+
+for path in get_all_file(enPath):
+    format_file(path)
