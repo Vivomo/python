@@ -15,6 +15,8 @@ enPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
 writePathZh = r'E:\git\pythonCode\test\translate\write\zh'
 writePathEn = r'E:\git\pythonCode\test\translate\write\en'
 prefix = r'l_'
+langNameExp = r'lang_name\s?=\s?[\'\"]\w+[\'\"]'
+chineseReg = u"[\u4e00-\u9fa5\u3040-\u309f\u30a0-\u30ff]+"
 
 
 class Line(object):
@@ -114,10 +116,51 @@ def format_file2(file_path):
         write_to_file(os.path.join(enPath, file_name), '\n'.join(lines))
     return word_set
 
-testFilePath = r'E:\git\pythonCode\test\translate\write\en\event_order.ftl'
-globalFilePath = ''
-globalSet = format_file2(globalFilePath)
-format_file2(testFilePath)
+
+def translate_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+        chinese = re.findall(chineseReg, content)
+        if chinese:
+            chinese.sort(key=len, reverse=True)
+            lang_dict = get_lang_name_dict(content)
+            final_dict = dict(globalDict.items() | lang_dict.items())
+
+            for ch in chinese:
+                if ch in final_dict:
+                    content = content.replace(ch, final_dict[ch])
+                else:
+                    print('%s not find in dict in %s' % (ch, file_path))
+
+
+def get_lang_name_dict(content):
+    line = re.findall(langNameExp, content)
+    lang_dict = {}
+    if line:
+        name_arr = re.split(r'\s+', re.sub(r'\W', ' ', line[0]).strip())
+        if len(name_arr) == 2:
+            file_path = os.path.join(enPath, 'l_%s.ftl' % name_arr[1])
+            with open(file_path, 'r', encoding='utf-8') as file:
+                for line in file.readlines():
+                    l = Line(line)
+                    if l.is_legal():
+                        lang_dict[l.ch] = l.name
+    return lang_dict
+
+# testFilePath = r'E:\git\pythonCode\test\translate\write\en\event_order.ftl'
+# globalFilePath = ''
+# globalSet = format_file2(globalFilePath)
+# format_file2(testFilePath)
 #
 # for path in get_all_file(enPath):
 #     format_file(path)
+pc1Path = ''
+pc2Path = ''
+wapPath = ''
+pathArr = [pc1Path, pc2Path, wapPath]
+globalDict = {}
+for path in pathArr:
+    for p in get_all_file(path):
+        pass
+
+
