@@ -120,34 +120,43 @@ def format_file2(file_path):
 def translate_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
-        chinese = re.findall(chineseReg, content)
+        chinese = list(set(re.findall(chineseReg, content)))
         if chinese:
             chinese.sort(key=len, reverse=True)
-            lang_dict = get_lang_name_dict(content)
+
+            lang_name = get_lang_name(content)
+            lang_dict = {}
+            if lang_name:
+                lang_dict = get_lang_name_dict(os.path.join(enPath, 'l_%s.ftl' % lang_name))
             final_dict = dict(globalDict.items() | lang_dict.items())
 
             for ch in chinese:
                 if ch in final_dict:
-                    content = content.replace(ch, final_dict[ch])
+                    content = content.replace(ch, '${%s}' % final_dict[ch])
                 else:
                     print('%s not find in dict in %s' % (ch, file_path))
+    write_to_file(file_path, content)
 
 
-def get_lang_name_dict(content):
-    line = re.findall(langNameExp, content)
+def get_lang_name(content):
+    lang_name_lines = re.findall(langNameExp, content)
+    if lang_name_lines:
+        split_word = re.split(r'\s+', re.sub(r'\W', ' ', lang_name_lines[0]).strip())
+        if len(split_word) == 2:
+            return split_word[1]
+    return None
+
+
+def get_lang_name_dict(file_path):
     lang_dict = {}
-    if line:
-        name_arr = re.split(r'\s+', re.sub(r'\W', ' ', line[0]).strip())
-        if len(name_arr) == 2:
-            file_path = os.path.join(enPath, 'l_%s.ftl' % name_arr[1])
-            with open(file_path, 'r', encoding='utf-8') as file:
-                for line in file.readlines():
-                    l = Line(line)
-                    if l.is_legal():
-                        lang_dict[l.ch] = l.name
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file.readlines():
+            l = Line(line)
+            if l.is_legal():
+                lang_dict[l.ch] = l.name
     return lang_dict
 
-# testFilePath = r'E:\git\pythonCode\test\translate\write\en\event_order.ftl'
+testFilePath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 # globalFilePath = ''
 # globalSet = format_file2(globalFilePath)
 # format_file2(testFilePath)
@@ -158,7 +167,10 @@ pc1Path = ''
 pc2Path = ''
 wapPath = ''
 pathArr = [pc1Path, pc2Path, wapPath]
-globalDict = {}
+globalPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl'
+globalDict = get_lang_name_dict(globalPath)
+
+translate_file(testFilePath)
 for path in pathArr:
     for p in get_all_file(path):
         pass

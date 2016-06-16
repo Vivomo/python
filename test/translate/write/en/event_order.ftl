@@ -36,7 +36,6 @@ l_payment_is_not_supported = "Payment is not supported" <#--17996086--> <#--不�
 l_departure_place = "Departure place" <#--51310770--> <#--集合地-->
 l_applicant_information = "Applicant information" <#--96309514--> <#--报名人信息-->
 l_total_amount = "Total amount" <#--93922342--> <#--总金额-->
-	l_25833017 = "" <#--25833017--> <#--无-->
 
 l_attachments = "attachments" <#--52539781--> <#--报名附件-->
 l_other_information = "Other information" <#--70154817--> <#--其他信息-->
