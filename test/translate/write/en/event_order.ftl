@@ -1,11 +1,17 @@
 <#assign
 
 l_order_time = "Order time" <#--87713733--> <#--下单时间-->
+l_order_time = "Order time" <#--87713733--> <#--下单时间-->
+l_order_time = "Order time" <#--87713733--> <#--下单时间-->
 l_after_finish_transaction,_system_will_bestow = "After finish transaction, system will bestow" <#--32090180--> <#--交易成功送-->
 l_order_status = "Order status" <#--56982834--> <#--订单状态-->
 l_event_is_ongoing = "Event is ongoing" <#--1852--> <#--活动已出票-->
 l_deposit = "Deposit" <#--56072207--> <#--定金-->
 l_offline_payment = "Offline payment" <#--80407045--> <#--线下付款-->
+l_delete_order = "Delete order" <#--36436328--> <#--删除订单-->
+l_delete_order = "Delete order" <#--36436328--> <#--删除订单-->
+l_delete_order = "Delete order" <#--36436328--> <#--删除订单-->
+l_delete_order = "Delete order" <#--36436328--> <#--删除订单-->
 l_delete_order = "Delete order" <#--36436328--> <#--删除订单-->
 l_select_group = "Select group" <#--25615712--> <#--选择分组-->
 l_start_date = "Start date" <#--31259216--> <#--出发日期-->

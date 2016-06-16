@@ -29,7 +29,7 @@ class Line(object):
             self.name = ''
 
         comment_arr = re.findall(commentExp, line)
-        if comment_arr:
+        if comment_arr and len(comment_arr) == 2:
             self.num = filter_comment(comment_arr[0])
             self.ch = filter_comment(comment_arr[1])
         else:
@@ -46,13 +46,13 @@ class Line(object):
         if self.is_legal():
             return '%s = "%s" <#--%s--> <#--%s-->' % (self.name, self.en, self.num, self.ch)
         else:
-            return self.line
+            return self.line.replace('\n', '')
 
     def to_ch(self):
         if self.is_legal():
             return '%s = "%s" <#--%s-->' % (self.name, self.en, self.num)
         else:
-            return self.line
+            return self.line.replace('\n', '')
 
 
 def get_all_file(file_path):
@@ -76,8 +76,8 @@ def write_to_file(file_path, content):
 def format_file(file_path):
     en_lines = []
     # zh_lines = []
+    file_name = os.path.basename(file_path)
     with open(file_path, 'r', encoding='utf-8') as read_file:
-        file_name = os.path.basename(read_file.name)
         for item in read_file.readlines():
             try:
                 line = Line(item)
@@ -93,9 +93,31 @@ def format_file(file_path):
     write_to_file(os.path.join(enPath, file_name), '\n'.join(en_lines))
 
 
+def format_file2(file_path):
+    """
+        去重
+    """
+    word_set = set()
+    lines = []
+    file_name = os.path.basename(file_path)
+    if file_name != 'l_global.ftl' and file_name.find('e') == 0:
+        with open(file_path, 'r', encoding='utf-8') as read_file:
+            for item in read_file.readlines():
+                line = Line(item)
+                if line.ch:
+                    if line.ch not in word_set:
+                        word_set.add(line.ch)
+                        lines.append(line.to_en())
+                else:
+                    lines.append(line.to_en())
+
+        write_to_file(os.path.join(enPath, file_name), '\n'.join(lines))
+    return word_set
+
 testFilePath = r'E:\git\pythonCode\test\translate\write\en\event_order.ftl'
-
-format_file(testFilePath)
-
-for path in get_all_file(enPath):
-    format_file(path)
+globalFilePath = ''
+globalSet = format_file2(globalFilePath)
+format_file2(testFilePath)
+#
+# for path in get_all_file(enPath):
+#     format_file(path)
