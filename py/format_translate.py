@@ -12,6 +12,7 @@ commentStartToken = '<#--'
 commentEndToken = '-->'
 # commentMarkExp = r'[<>#-]'
 enPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
+zhPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\zh'
 writePathZh = r'E:\git\pythonCode\test\translate\write\zh'
 writePathEn = r'E:\git\pythonCode\test\translate\write\en'
 prefix = r'l_'
@@ -24,8 +25,8 @@ class Line(object):
         self.line = line
         en_arr = re.findall(EnglishExp, line)
         if en_arr:
-            self.en = en_arr[0].replace('"', '')
-            self.name = 'l_'+re.sub(r'\s+', '_', self.en.lower())
+            self.en = en_arr[0].replace('"', '').strip()
+            self.name = ('l_'+re.sub(r'\W', '', re.sub(r'\s+', '_', self.en.lower()))).strip()
         else:
             self.en = ''
             self.name = ''
@@ -52,7 +53,7 @@ class Line(object):
 
     def to_ch(self):
         if self.is_legal():
-            return '%s = "%s" <#--%s-->' % (self.name, self.en, self.num)
+            return '%s = "%s" <#--%s-->' % (self.name, self.ch, self.num)
         else:
             return self.line.replace('\n', '')
 
@@ -77,21 +78,21 @@ def write_to_file(file_path, content):
 
 def format_file(file_path):
     en_lines = []
-    # zh_lines = []
+    zh_lines = []
     file_name = os.path.basename(file_path)
     with open(file_path, 'r', encoding='utf-8') as read_file:
         for item in read_file.readlines():
             try:
                 line = Line(item)
                 en_lines.append(line.to_en())
-
+                zh_lines.append(line.to_ch())
             except Exception as e:
                 en_lines.append(item)
+                zh_lines.append(item)
                 print(e)
                 print('error file is %s and the content of line is %s' % (file_name, item))
-            # zh_lines.append(line.to_ch())
 
-    # write_to_file(os.path.join(writePathZh, file_name), '\n'.join(zh_lines))
+    write_to_file(os.path.join(zhPath, file_name), '\n'.join(zh_lines))
     write_to_file(os.path.join(enPath, file_name), '\n'.join(en_lines))
 
 
@@ -161,18 +162,18 @@ testFilePath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 # globalSet = format_file2(globalFilePath)
 # format_file2(testFilePath)
 #
-# for path in get_all_file(enPath):
-#     format_file(path)
-pc1Path = ''
-pc2Path = ''
-wapPath = ''
+for path in get_all_file(enPath):
+    format_file(path)
+pc1Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default'
+pc2Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\saishi'
+wapPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default'
 pathArr = [pc1Path, pc2Path, wapPath]
 globalPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl'
 globalDict = get_lang_name_dict(globalPath)
 
-translate_file(testFilePath)
-for path in pathArr:
-    for p in get_all_file(path):
-        pass
+# translate_file(testFilePath)
+# for path in pathArr:
+#     for p in get_all_file(path):
+#         translate_file(p)
 
 
