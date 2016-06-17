@@ -18,6 +18,7 @@ writePathEn = r'E:\git\pythonCode\test\translate\write\en'
 prefix = r'l_'
 langNameExp = r'lang_name\s?=\s?[\'\"]\w+[\'\"]'
 chineseReg = u"[\u4e00-\u9fa5\u3040-\u309f\u30a0-\u30ff]+"
+noTranslateCount = 0
 
 
 class Line(object):
@@ -119,6 +120,9 @@ def format_file2(file_path):
 
 
 def translate_file(file_path):
+    if file_path in ignorePath:
+        return
+    global noTranslateCount
     with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
         chinese = list(set(re.findall(chineseReg, content)))
@@ -128,14 +132,24 @@ def translate_file(file_path):
             lang_name = get_lang_name(content)
             lang_dict = {}
             if lang_name:
-                lang_dict = get_lang_name_dict(os.path.join(enPath, 'l_%s.ftl' % lang_name))
+                try:
+                    lang_dict = get_lang_name_dict(os.path.join(enPath, 'l_%s.ftl' % lang_name))
+                except Exception as e:
+                    print(e)
+                    print(file_path)
             final_dict = dict(globalDict.items() | lang_dict.items())
 
             for ch in chinese:
                 if ch in final_dict:
                     content = content.replace(ch, '${%s}' % final_dict[ch])
                 else:
-                    print('%s not find in dict in %s' % (ch, file_path))
+                    if file_path in noTranslateDict:
+                        noTranslateDict[file_path] += 1
+                    else:
+                        noTranslateDict[file_path] = 1
+                    noTranslateCount += 1
+                    print('%s not find in dict in %s and lang_name is %s' % (ch, file_path, str(lang_name)))
+
     write_to_file(file_path, content)
 
 
@@ -162,18 +176,26 @@ testFilePath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 # globalSet = format_file2(globalFilePath)
 # format_file2(testFilePath)
 #
-for path in get_all_file(enPath):
-    format_file(path)
+# for path in get_all_file(enPath):
+#     format_file(path)
+ignorePath = [
+    r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default\index.ftl'
+]
+
 pc1Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default'
 pc2Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\saishi'
 wapPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default'
 pathArr = [pc1Path, pc2Path, wapPath]
 globalPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl'
 globalDict = get_lang_name_dict(globalPath)
-
+noTranslateDict = {}
 # translate_file(testFilePath)
-# for path in pathArr:
-#     for p in get_all_file(path):
-#         translate_file(p)
+for path in pathArr:
+    for p in get_all_file(path):
+        translate_file(p)
 
-
+# format_file(r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl')
+for (key, value) in noTranslateDict.items():
+    print('%s-------------%d' % (key, value))
+print('noTranslateCount=%d' % noTranslateCount)
+print('no translate file length %s' % len(noTranslateDict))

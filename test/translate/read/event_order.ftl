@@ -199,7 +199,7 @@ isUserPrice = order.orderPriceType == "N"
 	<#if order.getCreatePointCount != 0>
 		<div class="data-line">
 			<span class="key">${l_integral_presentation}：</span>
-			<div>${l_trade_success}送<span class="theme2-color"> ${order.getCreatePointCount} </span>${l_integral}</div>
+			<div>${l_trade_success}${l_present}<span class="theme2-color"> ${order.getCreatePointCount} </span>${l_integral}</div>
 		</div>
 	</#if>
 
@@ -318,7 +318,7 @@ isUserPrice = order.orderPriceType == "N"
 		</#if>
         <div class="field-line">
             <label for="remark">${l_order_remark}：</label>
-            <div class="remind">${(order.userRemark!="")?string(order.userRemark,'无')}</div>
+            <div class="remind">${(order.userRemark!="")?string(order.userRemark,'${l_none}')}</div>
         </div>
     </div>
 
