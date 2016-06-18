@@ -22,7 +22,11 @@ noTranslateCount = 0
 
 
 class Line(object):
-    def __init__(self, line):
+    def __init__(self, line, translate_result={}):
+        if translate_result:
+            self.ch = translate_result['dst']
+            self.en = translate_result['src']
+            pass
         self.line = line
         en_arr = re.findall(EnglishExp, line)
         if en_arr:
@@ -41,20 +45,20 @@ class Line(object):
             self.ch = ''
 
     def __str__(self):
-        return '\t[en:%s][ch:%s][num:%s]' % (self.en, self.ch, self.num)
+        return '\t[en:%s][ch:%s]' % (self.en, self.ch)
 
     def is_legal(self):
         return self.name != '' and self.en != '' and self.ch != ''
 
     def to_en(self):
         if self.is_legal():
-            return '%s = "%s" <#--%s--> <#--%s-->' % (self.name, self.en, self.num, self.ch)
+            return '%s = "%s" <#--%s-->' % (self.name, self.en, self.ch)
         else:
             return self.line.replace('\n', '')
 
     def to_ch(self):
         if self.is_legal():
-            return '%s = "%s" <#--%s-->' % (self.name, self.ch, self.num)
+            return '%s = "%s"' % (self.name, self.ch)
         else:
             return self.line.replace('\n', '')
 
@@ -120,8 +124,8 @@ def format_file2(file_path):
 
 
 def translate_file(file_path):
-    if file_path in ignorePath or is_ignore_file(file_path):
-        return
+    # if file_path in ignorePath or is_ignore_file(file_path):
+    #     return
     global noTranslateCount
     with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
@@ -182,6 +186,16 @@ def get_lang_name_dict(file_path):
 def is_ignore_file(file_path):
     return file_path.find('shoe') != -1
 
+
+def add_translate_content(file_path, content):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        old_content = file.read()
+    write_to_file(file_path, content + old_content)
+
+
+def translate_to_ftl_line(arr):
+    pass
+
 testFilePath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 # globalFilePath = ''
 # globalSet = format_file2(globalFilePath)
@@ -189,9 +203,7 @@ testFilePath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 #
 # for path in get_all_file(enPath):
 #     format_file(path)
-ignorePath = [
-    r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default\index.ftl'
-]
+
 
 pc1Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default'
 pc2Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\saishi'
@@ -199,24 +211,30 @@ wapPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\def
 pathArr = [pc1Path, pc2Path, wapPath]
 globalPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl'
 reTranslateFilePath = r'E:\git\pythonCode\test\translate\read\retranslate.txt'
+
+# format_file(r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl')
+
 globalDict = get_lang_name_dict(globalPath)
 noTranslateDict = {'global': set()}
 # translate_file(testFilePath)
-for path in pathArr:
-    for p in get_all_file(path):
-        translate_file(p)
+# for path in pathArr:
+#     for p in get_all_file(path):
+#         translate_file(p)
 
-# format_file(r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl')
-with open(reTranslateFilePath, 'w', encoding='utf-8') as reTranFile:
-    reTContent = []
-    for key in noTranslateDict.keys():
-        reTContent.append('#' + key)
-        for value in noTranslateDict[key]:
-            reTContent.append(value)
-    reTranFile.write('\n'.join(reTContent))
-# for (key, value) in noTranslateDict.items():
-#     print('%s-------------%d' % (key, value))
-print('noTranslateCount=%d' % noTranslateCount)
+# with open(reTranslateFilePath, 'w', encoding='utf-8') as reTranFile:
+#     reTContent = []
+#     for key in noTranslateDict.keys():
+#         reTContent.append('#' + key)
+#         for value in noTranslateDict[key]:
+#             reTContent.append(value)
+#     reTranFile.write('\n'.join(reTContent))
+for (key, value) in noTranslateDict.items():
+    print('%s-------------%d' % (key, value))
+    translate_to_ftl_line(translate_world('\n'.join(value)))
+# print('noTranslateCount=%d' % noTranslateCount)
 # print('no translate file length %s' % len(noTranslateDict))
+
+
+
 
 

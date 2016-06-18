@@ -112,8 +112,8 @@ def fetch_chinese(file_list):
                 w_file_en.write(''.join(w_content_en))
 
 
-fileList = get_all_file(readPath)
-fetch_chinese(fileList)
+# fileList = get_all_file(readPath)
+# fetch_chinese(fileList)
 
 
 
