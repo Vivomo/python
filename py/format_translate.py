@@ -143,10 +143,17 @@ def translate_file(file_path):
                 if ch in final_dict:
                     content = content.replace(ch, '${%s}' % final_dict[ch])
                 else:
-                    if file_path in noTranslateDict:
-                        noTranslateDict[file_path] += 1
+                    if lang_name in noTranslateDict:
+                        noTranslateDict[lang_name].add(ch)
                     else:
-                        noTranslateDict[file_path] = 1
+                        if lang_name:
+                            noTranslateDict[lang_name] = set()
+                        else:
+                            noTranslateDict['global'].add(ch)
+                    # if file_path in noTranslateDict:
+                    #     noTranslateDict[file_path] += 1
+                    # else:
+                    #     noTranslateDict[file_path] = 1
                     noTranslateCount += 1
                     print('%s not find in dict in %s and lang_name is %s' % (ch, file_path, str(lang_name)))
 
@@ -191,15 +198,23 @@ pc2Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\saishi
 wapPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default'
 pathArr = [pc1Path, pc2Path, wapPath]
 globalPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl'
+reTranslateFilePath = r'E:\git\pythonCode\test\translate\read\retranslate.txt'
 globalDict = get_lang_name_dict(globalPath)
-noTranslateDict = {}
+noTranslateDict = {'global': set()}
 # translate_file(testFilePath)
 for path in pathArr:
     for p in get_all_file(path):
         translate_file(p)
 
 # format_file(r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl')
-for (key, value) in noTranslateDict.items():
-    print('%s-------------%d' % (key, value))
+with open(reTranslateFilePath, 'w', encoding='utf-8') as reTranFile:
+    reTContent = []
+    for key in noTranslateDict.keys():
+        reTContent.append('#' + key)
+        for value in noTranslateDict[key]:
+            reTContent.append(value)
+    reTranFile.write('\n'.join(reTContent))
+# for (key, value) in noTranslateDict.items():
+#     print('%s-------------%d' % (key, value))
 print('noTranslateCount=%d' % noTranslateCount)
-print('no translate file length %s' % len(noTranslateDict))
+# print('no translate file length %s' % len(noTranslateDict))
