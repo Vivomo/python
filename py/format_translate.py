@@ -1,6 +1,6 @@
 import os
 import re
-
+from py import translate
 """
 这里的英文可能是一句话, 可能包含- . '
 但英文会被双引号引起来, 所以正则是这样的
@@ -147,7 +147,7 @@ def translate_file(file_path):
                         noTranslateDict[lang_name].add(ch)
                     else:
                         if lang_name:
-                            noTranslateDict[lang_name] = set()
+                            noTranslateDict[lang_name] = set([ch])
                         else:
                             noTranslateDict['global'].add(ch)
                     # if file_path in noTranslateDict:
@@ -218,3 +218,5 @@ with open(reTranslateFilePath, 'w', encoding='utf-8') as reTranFile:
 #     print('%s-------------%d' % (key, value))
 print('noTranslateCount=%d' % noTranslateCount)
 # print('no translate file length %s' % len(noTranslateDict))
+
+
