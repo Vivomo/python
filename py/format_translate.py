@@ -120,7 +120,7 @@ def format_file2(file_path):
 
 
 def translate_file(file_path):
-    if file_path in ignorePath:
+    if file_path in ignorePath or is_ignore_file(file_path):
         return
     global noTranslateCount
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -170,6 +170,10 @@ def get_lang_name_dict(file_path):
             if l.is_legal():
                 lang_dict[l.ch] = l.name
     return lang_dict
+
+
+def is_ignore_file(file_path):
+    return file_path.find('shoe') != -1
 
 testFilePath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 # globalFilePath = ''
