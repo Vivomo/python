@@ -230,7 +230,7 @@ noTranslateDict = {'global': set()}
 #     reTranFile.write('\n'.join(reTContent))
 for (key, value) in noTranslateDict.items():
     print('%s-------------%d' % (key, value))
-    translate_to_ftl_line(translate_world('\n'.join(value)))
+    translate_to_ftl_line(translate.translate_word('\n'.join(value)))
 # print('noTranslateCount=%d' % noTranslateCount)
 # print('no translate file length %s' % len(noTranslateDict))
 

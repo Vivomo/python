@@ -36,7 +36,7 @@ def format_assign(zh):
     }
 
 
-def translate_world(words, from_lang='zh', to_lang='en', times=0):
+def translate_word(words, from_lang='zh', to_lang='en', times=0):
     http_client = None
     salt = int(random.random()*10000000)
     sign = bytes(appid + words + str(salt) + secretKey, encoding='utf-8')
@@ -54,7 +54,7 @@ def translate_world(words, from_lang='zh', to_lang='en', times=0):
         if not translate_result:
             print(json.loads(resp.decode('utf-8')).get('error_code'))
             if times < 3:
-                translate_world(words, times=times+1)
+                translate_word(words, times=times+1)
             else:
                 print('Error 3 times')
 
@@ -98,7 +98,7 @@ def fetch_chinese(file_list):
 
                 zh_list = list(temp_content)
                 format_words = list(map(format_assign, zh_list))
-                format_translate(format_words, translate_world('\n'.join(zh_list)), file_name)
+                format_translate(format_words, translate_word('\n'.join(zh_list)), file_name)
                 zh_content = list(map(lambda w_json: w_json.get('zh'), format_words))
                 w_content_zh += zh_content
                 w_content_zh.append('>')

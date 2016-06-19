@@ -9,7 +9,7 @@ appid = '20160607000022958'
 secretKey = 'lCxFBKsQHEvNw7RRFapW'
 
 
-def translate_world(words, from_lang='en', to_lang='zh'):
+def translate_word(words, from_lang='en', to_lang='zh'):
     http_client = None
     salt = random.randint(32768, 65536)
     sign = bytes(appid + words + str(salt) + secretKey, encoding='utf-8')
@@ -30,4 +30,4 @@ def translate_world(words, from_lang='en', to_lang='zh'):
         if http_client:
             http_client.close()
 
-print(translate_world('apple\norange'))
+print(translate_word('apple\norange'))
