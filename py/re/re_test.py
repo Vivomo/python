@@ -28,4 +28,22 @@ def test_search():
     print(m1.groups())
 
 
-test_search()
+def test_group():
+    m = re.match('ab', 'ab')
+    print(m.group())
+    print(m.groups())
+
+    m = re.match('(ab)', 'ab')
+    print(m.group())
+    print(m.groups())
+
+    m = re.match('(a)(b)', 'ab')
+    print(m.group())
+    print(m.groups())
+
+    m = re.match('(a(b))', 'ab')
+    print(m.group())
+    print(m.groups())
+# test_search()
+
+test_group()
