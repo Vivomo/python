@@ -44,6 +44,20 @@ def test_group():
     m = re.match('(a(b))', 'ab')
     print(m.group())
     print(m.groups())
-# test_search()
 
-test_group()
+
+def test_finditer():
+    """
+    python3  的迭代器还不会用 finditer 暂时pass
+    :TODO
+    """
+    th_reg = r'(th\w) and (th\w+)'
+    s = 'This and that'
+    result = re.findall(th_reg, s, re.I)
+    print(result)
+    result2 = re.finditer(th_reg, s, re.I).__next__().group(1)
+    print(result2)
+
+# test_search()
+# test_group()
+test_finditer()
