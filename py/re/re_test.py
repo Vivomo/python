@@ -58,6 +58,13 @@ def test_finditer():
     result2 = re.finditer(th_reg, s, re.I).__next__().group(1)
     print(result2)
 
+
+def test_subn():
+    s = 'I love X,X...'
+    print(re.sub('X', 'susu', s))
+    print(re.subn('X', 'susu', s))
+
 # test_search()
 # test_group()
-test_finditer()
+# test_finditer()
+test_subn()
