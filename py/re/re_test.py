@@ -80,6 +80,11 @@ that line, it's the best
     (\d{4})
 ''', '(800) 555-1212').groups())
 
+    print(re.findall(r'http://(?:\w+\.)*(\w+\.com)',
+                     'http://google.com http://www.google.com http://code.google.com'))
+    print(re.search(r'\((?P<areacode>\d{3})\) (?P<prefix>\d{3})-(?:\d{4})',
+              '(800) 555-1212').groupdict())
+
 # test_search()
 # test_group()
 # test_finditer()
