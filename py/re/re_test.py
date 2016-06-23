@@ -64,7 +64,24 @@ def test_subn():
     print(re.sub('X', 'susu', s))
     print(re.subn('X', 'susu', s))
 
+
+def test_reg_expand():
+    print(re.findall(r'(?i)yes', 'yes? Yes. YES!!'))
+    print(re.findall(r'(?im)(^th[\w ]+)', """
+The line is first,
+another line,
+that line, it's the best
+    """))
+    print(re.search(r'''(?x)
+    \((\d{3})\)
+    [ ]
+    (\d{3})
+    -
+    (\d{4})
+''', '(800) 555-1212').groups())
+
 # test_search()
 # test_group()
 # test_finditer()
-test_subn()
+# test_subn()
+test_reg_expand()
