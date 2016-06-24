@@ -84,9 +84,13 @@ that line, it's the best
                      'http://google.com http://www.google.com http://code.google.com'))
     print(re.search(r'\((?P<areacode>\d{3})\) (?P<prefix>\d{3})-(?:\d{4})',
               '(800) 555-1212').groupdict())
+    print(re.search(r'(?P<name>l_\w+) = "(?P<en>.+?)" <#--(?P<num>\d+)--> <#--(?P<ch>.+?)-->', 'l_delete_order = "Delete order" <#--36436328--> <#--删除订单-->').groupdict())
 
+
+def test_reg_expand2():
+    pass
 # test_search()
 # test_group()
 # test_finditer()
 # test_subn()
-test_reg_expand()
+# test_reg_expand()
