@@ -88,9 +88,26 @@ that line, it's the best
 
 
 def test_reg_expand2():
-    pass
+    print(re.findall(r'\w+(?= vimo)', '''
+    abc vimo
+    efg
+    hig vimo
+    '''))
+    print(re.findall(r'(?m)^\s+(?!vimo|tizo)(\w+)', '''
+    abc@qq.com
+    vimo@qq.com
+    tizo@qq.com
+    7890qqewq
+    '''))
+    print(['%s@aw.com' % e.group(1) for e in re.finditer(r'(?m)^\s+(?!vimo|tizo)(\w+)', '''
+    abc@qq.com
+    vimo@qq.com
+    tizo@qq.com
+    7890qqewq
+    ''')])
 # test_search()
 # test_group()
 # test_finditer()
 # test_subn()
 # test_reg_expand()
+test_reg_expand2()
