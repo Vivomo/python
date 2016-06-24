@@ -1,5 +1,5 @@
 import re
-
+import os
 """
 re 模块的测试
 """
@@ -105,9 +105,17 @@ def test_reg_expand2():
     tizo@qq.com
     7890qqewq
     ''')])
+
+
+def test_other():
+    with os.popen('tasklist /nh', 'r') as f:
+        for eachline in f:
+            print(re.findall(r'([\w.]+(?:[\w.]+)*)\s\s+(\d+) \w+\s\s+\d+\s\s+([\d,]+ K)',
+                             eachline.rstrip()))
 # test_search()
 # test_group()
 # test_finditer()
 # test_subn()
 # test_reg_expand()
-test_reg_expand2()
+# test_reg_expand2()
+test_other()
