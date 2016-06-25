@@ -34,3 +34,21 @@ def re_practice2():
     匹配www起始 .com结尾的域名
     """
     re.match(r'www://(\w+.)+?\w+', 'www://www.bing.com')
+
+
+def re_practice3():
+    """
+    匹配email
+    """
+    re.match('(\w+.)*\w+@(\w+.)*\w+.(\w+.)*\w+', '929992114@qq.com')
+    """
+    匹配url
+    TODO 待完善
+    """
+    re.match(r'(https?://)?(\w+.)*\w+')
+    """
+    python type 返回值 eg. <type 'a_b'>
+    """
+    re.match(r'<type\s\'\w+\'>', r'<type \'a_b\'>')
+    
+
