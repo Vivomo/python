@@ -12,11 +12,12 @@ while True:
     data = input('>')
     if not data:
         break
+    data = data.encode()
     tcpCliSock.send(data)
     data = tcpCliSock.recv(BUFSIZ)
     if not data:
         break
-        print(data.decode('utf-8'))
+    print(data.decode('utf-8'))
 
 tcpCliSock.close()
 
