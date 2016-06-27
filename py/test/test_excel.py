@@ -17,7 +17,7 @@ try:
         row_data = sh.row_values(i)
         cell_value = sh.cell_value(i, 1)
         xlrd.xldate_as_tuple(cell_value, 0)
-        # print(xlrd.xldate_as_tuple(cell_value, 0))
+        print(xlrd.xldate_as_tuple(cell_value, 0))
         # print(cell_value)
         print(row_data)
 
