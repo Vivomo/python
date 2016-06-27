@@ -17,8 +17,9 @@ try:
         row_data = sh.row_values(i)
         cell_value = sh.cell_value(i, 1)
         xlrd.xldate_as_tuple(cell_value, 0)
-        print(xlrd.xldate_as_tuple(cell_value, 0))
-        # print(row_data)
+        # print(xlrd.xldate_as_tuple(cell_value, 0))
+        # print(cell_value)
+        print(row_data)
 
 except Exception as e:
     print("no sheet in %s named 参赛者信息" % fileName)
