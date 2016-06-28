@@ -1,7 +1,7 @@
 import re
 import os
 
-from py import translate
+from py.translate import translate
 
 pcJSPath = r'E:\SHT\project\sas-web\src\main\webapp\src\default\js'
 wapJSPath = r'E:\SHT\project\sas-web\src\main\webapp\src\m\js'
