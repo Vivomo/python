@@ -79,8 +79,22 @@ def file_to_line_set(file_path):
             ol = Line(l)
             if ol.is_legal():
                 line_set.add(ol)
-
     return line_set
+
+
+def en_to_ch(file_path):
+    """
+    把 en下的文件 转成 ch 文件
+    """
+
+    for f in IO_util.get_all_file(file_path):
+        with open(f, 'r', encoding='utf-8') as r_file:
+            ch_lines = []
+            for line in r_file.readlines():
+                l = Line(line)
+                ch_lines.append(l.to_ch())
+        IO_util.write_to_file(os.path.join(zhPath, os.path.basename(f)), '\n'.join(ch_lines))
+
 
 var_reg = re.compile('l_\w+')
 var_ftl_reg = re.compile(r'(?m)\$\{\s*(l_\w+)\s*\}')
@@ -94,33 +108,33 @@ pc1Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\defaul
 pc2Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\saishi'
 wapPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default'
 enPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
+zhPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\zh'
 
 Line = L.Line
 
 pathArr = (pc1Path, pc2Path, wapPath)
 
 langNameExp = r'lang_name\s?=\s?[\'\"](\w+)[\'\"]'
-# print(get_language_var_ftl(testPath))
-# print(get_language_var(testPath2))
+
 
 langDict = get_lang_dict()
 globalSet = langDict['global']
 globalSetCopy = copy.copy(globalSet)
 globalLineSet = file_to_line_set(globalPath)
-
-for path in pathArr:
-    for file in IO_util.get_all_file(path):
-        filter_var(file)
-
-print(globalSetCopy)
-for k, v in langDict.items():
-    if v and k != 'global':
-        print(k, '-->', v)
-        print('待定:', v & globalSet)
-        del_file_var(k, v & globalSet, True)
-        print('需要删除', v - globalSet)
-        del_file_var(k, v - globalSet)
-
-# print(get_language_var_ftl(testPath))
+#
+# for path in pathArr:
+#     for file in IO_util.get_all_file(path):
+#         filter_var(file)
+#
+# print(globalSetCopy)
+# for k, v in langDict.items():
+#     if v and k != 'global':
+#         print(k, '-->', v)
+#         print('待定:', v & globalSet)
+#         del_file_var(k, v & globalSet, True)
+#         print('需要删除', v - globalSet)
+#         del_file_var(k, v - globalSet)
 
 
+
+en_to_ch(enPath)

@@ -1,11 +1,9 @@
 import re
 
-EnglishExp = re.compile(r'l_(\w+)\s*=\s*[\'\"](.+?)[\'\"]\s*<#--(.+?)-->')
+EnglishExp = re.compile(r'(l_\w+)\s*=\s*[\'\"](.+?)[\'\"]\s*<#--(.+?)-->')
 
 
 class Line(object):
-
-    EnglishExp = re.compile(r'l_(w+)')
 
     def __init__(self, line='', translate_result=None):
         self.line = line
