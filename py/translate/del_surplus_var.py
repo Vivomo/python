@@ -2,6 +2,7 @@ import os
 import re
 import copy
 from py.utils import IO_util
+from py.translate import line as L
 
 
 def del_dict_key(_dict, key):
@@ -50,19 +51,36 @@ def filter_var(file_path):
 
 def del_file_var(file_name, var_set, find_global=False):
     del_lines = []
-    with open(os.path.join(enPath, 'l_%s.ftl' % file_name), 'r', encoding='utf-8') as f:
+    file_path = os.path.join(enPath, 'l_%s.ftl' % file_name)
+    with open(file_path, 'r', encoding='utf-8') as f:
         for i, line in enumerate(f.readlines()):
             result = re.search(var_reg, line)
             if result and result.group() in var_set:
                 if find_global:
-                    pass
+                    if is_same_global_var(line):
+                        del_lines.append(i + 1)
                 else:
                     del_lines.append(i+1)
+    IO_util.del_file_lines(file_path, del_lines)
 
 
 def is_same_global_var(line):
-    pass
+    ol = Line(line)
+    for l in globalLineSet:
+        if ol.name == l.name:
+            return ol.en == l.en
+    return False
 
+
+def file_to_line_set(file_path):
+    line_set = set()
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for l in f.readlines():
+            ol = Line(l)
+            if ol.is_legal():
+                line_set.add(ol)
+
+    return line_set
 
 var_reg = re.compile('l_\w+')
 var_ftl_reg = re.compile(r'(?m)\$\{\s*(l_\w+)\s*\}')
@@ -71,10 +89,13 @@ var_ftl_reg = re.compile(r'(?m)\$\{\s*(l_\w+)\s*\}')
 testPath = r'E:\git\pythonCode\test\translate\read\event_order.ftl'
 testPath2 = r'E:\git\pythonCode\test\translate\write\en\l_event_order.ftl'
 
+globalPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en\l_global.ftl'
 pc1Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default'
 pc2Path = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\saishi'
 wapPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\waptemplate\default'
 enPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
+
+Line = L.Line
 
 pathArr = (pc1Path, pc2Path, wapPath)
 
@@ -85,6 +106,7 @@ langNameExp = r'lang_name\s?=\s?[\'\"](\w+)[\'\"]'
 langDict = get_lang_dict()
 globalSet = langDict['global']
 globalSetCopy = copy.copy(globalSet)
+globalLineSet = file_to_line_set(globalPath)
 
 for path in pathArr:
     for file in IO_util.get_all_file(path):
@@ -95,8 +117,9 @@ for k, v in langDict.items():
     if v and k != 'global':
         print(k, '-->', v)
         print('待定:', v & globalSet)
+        del_file_var(k, v & globalSet, True)
         print('需要删除', v - globalSet)
-
+        del_file_var(k, v - globalSet)
 
 # print(get_language_var_ftl(testPath))
 

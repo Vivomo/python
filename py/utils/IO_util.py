@@ -22,12 +22,10 @@ def write_to_file(file_path, content):
         file.write(content)
 
 
-def del_file_lines(file_path, arg):
-    if isinstance(arg, int):
-        del_lines = [arg]
-    else:
-        del_lines = arg
-
+def del_file_lines(file_path, del_lines):
+    """
+    将文件的指定行删除, 首行不是0, 是1
+    """
     if isinstance(del_lines, list):
         with open(file_path, 'r', encoding='utf-8') as f:
             write_c = []
