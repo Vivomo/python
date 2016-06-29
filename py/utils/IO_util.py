@@ -20,3 +20,18 @@ def write_to_file(file_path, content):
     """
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write(content)
+
+
+def del_file_lines(file_path, arg):
+    if isinstance(arg, int):
+        del_lines = [arg]
+    else:
+        del_lines = arg
+
+    if isinstance(del_lines, list):
+        with open(file_path, 'r', encoding='utf-8') as f:
+            write_c = []
+            for i, line in enumerate(f.readlines()):
+                if i + 1 not in del_lines:
+                    write_c.append(line)
+        write_to_file(file_path, ''.join(write_c))
