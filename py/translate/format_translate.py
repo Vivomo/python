@@ -1,6 +1,6 @@
 import os
 import re
-from py import translate
+from py.translate import translate
 """
 这里的英文可能是一句话, 可能包含- . '
 但英文会被双引号引起来, 所以正则是这样的
