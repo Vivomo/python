@@ -50,5 +50,9 @@ def re_practice3():
     python type 返回值 eg. <type 'a_b'>
     """
     re.match(r'<type\s\'\w+\'>', r'<type \'a_b\'>')
-    
+
+
+def re_practice4():
+    pass
+
 
