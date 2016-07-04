@@ -21,4 +21,9 @@ r = re.search(langNameExp,s)
 # print(r)
 # print(r.groups()[0])
 testPath = r'E:\git\pythonCode\test\translate\write\chinese_js.txt'
-IO_util.del_file_lines(testPath, [1, 3, 5, 8, 9])
+# IO_util.del_file_lines(testPath, [1, 3, 5, 8, 9])
+
+with open(testPath, 'r+', encoding='utf-8') as f:
+    lines = f.readlines()
+    f.write(''.join(lines[1:10]))
+    print(lines)
