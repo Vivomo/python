@@ -7,9 +7,9 @@ class DirList(object):
 
     def __init__(self, initdir=None):
         self.top = Tk()
-        self.label = Label(self.top, text='Directory Lister v1.1')
-        self.label.pack()
-
+        self.headTitle = Label(self.top, text='Directory Lister v1.1')
+        self.headTitle.pack()
+        # 保存当前目录名
         self.cwd = StringVar(self.top)
 
         self.dirl = Label(self.top, fg='blue', font=('Arial', 12, 'bold'))
@@ -72,21 +72,24 @@ class DirList(object):
             sleep(2)
             if not (hasattr(self, 'last')) and self.last:
                 self.last = os.curdir
-            self.cwd.set('FETCHING DIRECTORY CONTENTS...')
-            self.top.update()
-            dirlist = os.listdir(tdir)
-            dirlist.sort()
-            os.chdir(tdir)
-
-            self.dirl.config(text=os.getcwd())
-            self.dirs.delete(0, END)
-            self.dirs.insert(END, os.curdir)
-            self.dirs.insert(END, os.pardir)
-            for eachFile in dirlist:
-                self.dirs.insert(END, eachFile)
-            self.cwd.set(os.curdir)
+            self.cwd.set(self.last)
             self.dirs.config(selectbackground='LightSkyBlue')
+            self.top.update()
 
+        self.cwd.set('FETCHING DIRECTORY CONTENTS...')
+        self.top.update()
+        dirlist = os.listdir(tdir)
+        dirlist.sort()
+        os.chdir(tdir)
+
+        self.dirl.config(text=os.getcwd())
+        self.dirs.delete(0, END)
+        self.dirs.insert(END, os.curdir)
+        self.dirs.insert(END, os.pardir)
+        for eachFile in dirlist:
+            self.dirs.insert(END, eachFile)
+        self.cwd.set(os.curdir)
+        self.dirs.config(selectbackground='LightSkyBlue')
 
 
 def main():
