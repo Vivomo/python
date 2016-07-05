@@ -1,4 +1,6 @@
-import re, os
+import os
+import re
+
 from py.utils import IO_util
 
 newWordsPath = r'../../src/new_words.txt'
