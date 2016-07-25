@@ -1,4 +1,2 @@
 f=global
-l_hour_ab|HRS|时
-l_minute_ab|MINS|分
-l_second_ab|SECS|秒
+l_other_payment|Other payment|其他支付

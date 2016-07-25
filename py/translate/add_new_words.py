@@ -1,9 +1,11 @@
-import re, os
+import os
+import re
+
 from py.utils import IO_util
 
 newWordsPath = r'../../src/new_words.txt'
 fileNameReg = re.compile(r'f=(\w+)')
-wordReg = re.compile(r'(l_\w+)\|(.+?)\|(.+?)')
+wordReg = re.compile(r'(l_\w+)\|(.+?)\|(.+)')
 assignReg = re.compile(r'<#assign')
 enPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
 zhPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\zh'

@@ -1,4 +1,4 @@
-from baike_spider import url_manager, html_downloader, html_parser, html_outputer
+from py.baike_spider import url_manager, html_downloader, html_parser, html_outputer
 
 
 class SpiderMain(object):
