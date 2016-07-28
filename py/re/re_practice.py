@@ -53,10 +53,6 @@ def re_practice3():
 
 
 def re_practice4():
-    pass
-
-
-def re_practice4():
     """
     匹配月份
     """
