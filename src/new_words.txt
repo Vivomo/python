@@ -1,2 +1,2 @@
-f=global
-l_other_payment|Other payment|其他支付
+f=event
+l_more_applier|More|更多报名

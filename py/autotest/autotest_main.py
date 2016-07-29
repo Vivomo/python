@@ -27,9 +27,15 @@ def get_url_content(url):
 
 
 def check_freemarker_error(url, content):
+    url = url.replace('\n', '')
     if content.find('FreeMarker template error') != -1:
         print('发现freeMark异常, 链接是%s' % url)
+    else:
+        print('%s正常' % url)
 
 
 for u in get_urls():
     check_freemarker_error(u, get_url_content(u))
+
+
+input('')
