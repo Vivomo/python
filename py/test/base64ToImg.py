@@ -1,5 +1,4 @@
 import os
-import base64
 from py.utils import IO_util
 
 writePath = r'E:\git\pythonCode\src\theme'
