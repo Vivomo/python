@@ -13,6 +13,5 @@ with open(base64FilePath, 'r', encoding='utf-8') as file:
         # if l % 3 != 0:
         #     base64str += (3 - l % 3) * '='
         dir_path = os.path.join(writePath, str(i + 1))
-        os.mkdir(dir_path)
         IO_util.base64_to_img(base64str[22:], os.path.join(dir_path, 'countdown_arc_bg.png'))
 
