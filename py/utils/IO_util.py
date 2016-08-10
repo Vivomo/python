@@ -1,5 +1,5 @@
 import os
-
+import base64
 
 def get_all_file(file_path):
     """
@@ -33,3 +33,16 @@ def del_file_lines(file_path, del_lines):
                 if i + 1 not in del_lines:
                     write_c.append(line)
         write_to_file(file_path, ''.join(write_c))
+
+
+def base64_to_img(base64str, file_path):
+    """
+    将一个base64字符串转为图片存入指定路径
+    :param base64str: base64字符串
+    :param file_path: 图片写入的路径
+    :return:
+    """
+    img_data = base64.b64decode(base64str)
+    file = open(file_path, 'wb')
+    file.write(img_data)
+    file.close()
