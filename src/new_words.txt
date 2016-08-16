@@ -1,2 +1,2 @@
-f=event
-l_more_applier|More|更多报名
+f=global
+l_Hotline|Hotline|客服热线
