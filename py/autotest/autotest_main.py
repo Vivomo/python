@@ -2,11 +2,17 @@ import http.client
 import http.cookiejar
 import json
 from urllib import request
+from py.autotest import url_manager
 
 
 class AutoTest(object):
 
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
+        self.urls = url_manager.UrlManager(config)
+        pass
+
+    def run(self):
         pass
 
 
