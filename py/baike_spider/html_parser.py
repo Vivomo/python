@@ -1,6 +1,7 @@
 import re
 import urllib.parse
 from bs4 import BeautifulSoup
+from py.autotest import html_downloader
 
 
 class HtmlParser(object):
@@ -24,10 +25,9 @@ class HtmlParser(object):
         return new_urls
 
     def _get_new_data(self, url, soup):
-        res_data = {}
+        res_data = {'url': url}
 
         # url
-        res_data['url'] = url
 
         # <dd class="lemmaWgt-lemmaTitle-title"><h1>Python</h1>
         title_node = soup.find('dd', class_='lemmaWgt-lemmaTitle-title').find('h1')
@@ -39,3 +39,7 @@ class HtmlParser(object):
         res_data['summary'] = summary_node.get_text()
 
         return res_data
+
+
+    def get_index_theme(self, url, soup):
+        pass

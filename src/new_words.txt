@@ -1,2 +1,2 @@
 f=global
-l_Hotline|Hotline|客服热线
+l_search_goods|Search gooods|搜索商品

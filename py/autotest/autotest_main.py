@@ -1,6 +1,13 @@
 import http.client
 import http.cookiejar
+import json
 from urllib import request
+
+
+class AutoTest(object):
+
+    def __init__(self):
+        pass
 
 
 def get_urls():
@@ -34,8 +41,17 @@ def check_freemarker_error(url, content):
         print('%s正常' % url)
 
 
-for u in get_urls():
-    check_freemarker_error(u, get_url_content(u))
+# def
 
+#
+# for u in get_urls():
+#     check_freemarker_error(u, get_url_content(u))
+
+if __name__ == '__main__':
+    with open('data.json', 'r', encoding='utf-8') as jsonFile:
+        data = json.loads(jsonFile.read())
+        root_url = data['url']
+        mainData = data['']
+    print(root_url)
 
 input('')
