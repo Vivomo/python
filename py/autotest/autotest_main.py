@@ -15,10 +15,11 @@ class AutoTest(object):
 
     def freemarker_check(self):
         cfg = self.config
-        deep = cfg['deep']
         self.urls.add_new_url(cfg['url'])
         temp = {cfg['url']}
-        for i in range(1, deep):
+        deep = cfg['deep']
+        r = range(0, deep)
+        for i in r:
             temp_set = set()
             for u in temp:
                 try:

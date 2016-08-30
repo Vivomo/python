@@ -17,11 +17,13 @@ class HtmlParser(object):
     def _get_new_urls(self, url, soup):
         new_urls = set()
         # /view/123.htm
-        links = soup.find_all('a', href=re.compile(r'(?!javascript)'))
+        # links = soup.find_all('a', href=re.compile(r'(?!javascript)'))
+        links = soup.find_all('a')
         for link in links:
             new_url = link['href']
-            new_full_url = urllib.parse.urljoin(url, new_url)
-            new_urls.add(new_full_url)
+            if new_url.find('javascript') == -1:
+                new_full_url = urllib.parse.urljoin(url, new_url)
+                new_urls.add(new_full_url)
         return new_urls
 
     def _get_new_data(self, url, soup):
@@ -30,13 +32,9 @@ class HtmlParser(object):
         # url
 
         # <dd class="lemmaWgt-lemmaTitle-title"><h1>Python</h1>
-        title_node = soup.find('dd', class_='lemmaWgt-lemmaTitle-title').find('h1')
-        res_data['title'] = title_node.get_text()
-
-        # <div class="lemma-summary" label-module="lemmaSummary">
-
-        summary_node = soup.find('div', class_='lemma-summary')
-        res_data['summary'] = summary_node.get_text()
+        text = soup.getText()
+        if text.find('FreeMarker template error') != -1:
+            res_data['error'] = 'FreeMarker Error'
 
         return res_data
 
