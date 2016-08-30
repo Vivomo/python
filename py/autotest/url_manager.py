@@ -1,7 +1,5 @@
 class UrlManager(object):
-    def __init__(self, config):
-        self.root_url = config['root_url']
-
+    def __init__(self):
         self.new_urls = set()
         self.old_urls = set()
 
