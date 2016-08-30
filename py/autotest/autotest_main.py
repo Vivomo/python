@@ -16,30 +16,28 @@ class AutoTest(object):
     def freemarker_check(self):
         cfg = self.config
         deep = cfg['deep']
-        count = 1
-        self.urls.add_new_url(cfg['root_url'])
-        while self.urls.has_new_url():
-            try:
-                new_url = self.urls.get_new_url()
-                html_content = self.downloader.download(new_url)
-                new_urls, new_data = self.parser.parse(new_url, html_content)
-                self.urls.add_new_urls(new_urls)
-                # self.outputer.collect_data(new_data)
-                print('craw %d : %s' % (count, new_url))
+        self.urls.add_new_url(cfg['url'])
+        temp = {cfg['url']}
+        for i in range(1, deep):
+            temp_set = set()
+            for u in temp:
+                try:
+                    html_content = self.downloader.download(u)
+                    new_urls, new_data = self.parser.parse(u, html_content)
+                    temp_set |= new_urls
+                except BaseException as e:
+                    print('craw failed, result %s ' % e)
+            temp = temp_set - temp
 
-                # if count == size:
-                #     break
-                count += 1
-            except BaseException as e:
-                print('craw failed on %d result %s' % (count, e))
+        # self.outputer.output_html()
+    @staticmethod
+    def is_freemarker_error(url, content):
+        if content.find('FreeMarker template error') != -1:
+            print('发现freeMark异常, 链接是%s' % url)
+        else:
+            print('%s正常' % url)
 
-        self.outputer.output_html()
-        pass
 
-
-def get_urls():
-    with open('../../src/autotesturl.txt', 'r', encoding='utf-8') as file:
-        return file.readlines()
 
 
 def get_url_content(url):
@@ -60,13 +58,6 @@ def get_url_content(url):
     return read
 
 
-def check_freemarker_error(url, content):
-    url = url.replace('\n', '')
-    if content.find('FreeMarker template error') != -1:
-        print('发现freeMark异常, 链接是%s' % url)
-    else:
-        print('%s正常' % url)
-
 
 # def
 
@@ -77,9 +68,7 @@ def check_freemarker_error(url, content):
 if __name__ == '__main__':
     with open('data.json', 'r', encoding='utf-8') as jsonFile:
         data = json.loads(jsonFile.read())
-        root_url = data['url']
-        spiderDeep = data['deep']
         at = AutoTest(data)
-        at.run()
+        at.freemarker_check()
 
 input('')
