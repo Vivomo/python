@@ -11,32 +11,34 @@ class AutoTest(object):
         self.config = config
         self.urls = url_manager.UrlManager()
         self.downloader = html_downloader.HtmlDownloader()
-        self.parser = html_parser.HtmlParser()
+        self.parser = html_parser.HtmlParser(root_url=config['url'])
 
     def freemarker_check(self):
         cfg = self.config
         self.urls.add_new_url(cfg['url'])
-        temp = {cfg['url']}
         deep = cfg['deep']
-        r = range(0, deep)
-        for i in r:
+        self.urls.add_new_url(cfg['url'])
+        for i in range(0, deep):
             temp_set = set()
-            for u in temp:
+            while self.urls.has_new_url():
+                u = self.urls.get_new_url()
                 try:
                     html_content = self.downloader.download(u)
                     new_urls, new_data = self.parser.parse(u, html_content)
                     temp_set |= new_urls
+                    print(u)
                 except BaseException as e:
-                    print('craw failed, result %s ' % e)
-            temp = temp_set - temp
+                    print('craw %s failed, result %s ' % (u, e))
+            self.urls.add_new_urls(temp_set)
 
         # self.outputer.output_html()
-    @staticmethod
-    def is_freemarker_error(url, content):
-        if content.find('FreeMarker template error') != -1:
-            print('发现freeMark异常, 链接是%s' % url)
-        else:
-            print('%s正常' % url)
+        print('FreeMarker error check over')
+
+    def resources_check(self):
+        """
+        check js & css of root_url
+        :return:
+        """
 
 
 

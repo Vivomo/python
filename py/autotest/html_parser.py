@@ -5,6 +5,9 @@ from py.autotest import html_downloader
 
 
 class HtmlParser(object):
+    def __init__(self, root_url=''):
+        self.root_url = root_url
+
     def parse(self, url, html_content):
         if url is None or html_content is None:
             return
@@ -18,12 +21,11 @@ class HtmlParser(object):
         new_urls = set()
         # /view/123.htm
         # links = soup.find_all('a', href=re.compile(r'(?!javascript)'))
-        links = soup.find_all('a')
+        links = filter(self.cross_domain_filter, soup.find_all('a', href=re.compile(r'.*?/.*')))
         for link in links:
             new_url = link['href']
-            if new_url.find('javascript') == -1:
-                new_full_url = urllib.parse.urljoin(url, new_url)
-                new_urls.add(new_full_url)
+            new_full_url = urllib.parse.urljoin(url, new_url)
+            new_urls.add(new_full_url)
         return new_urls
 
     def _get_new_data(self, url, soup):
@@ -35,9 +37,14 @@ class HtmlParser(object):
         text = soup.getText()
         if text.find('FreeMarker template error') != -1:
             res_data['error'] = 'FreeMarker Error'
-
+            print('发现freeMark异常, 链接是%s' % url)
         return res_data
 
 
     def get_index_theme(self, url, soup):
         pass
+
+    def cross_domain_filter(self, link):
+        href = link['href']
+        return href.find('http') == -1 or href.find(self.root_url) != -1
+
