@@ -48,3 +48,12 @@ class HtmlParser(object):
         href = link['href']
         return href.find('http') == -1 or href.find(self.root_url) != -1
 
+    @staticmethod
+    def resource_parse(url, html_content):
+        if html_content is None:
+            return
+        soup = BeautifulSoup(html_content, 'html.parser', from_encoding='utf-8')
+        js = map(lambda j: urllib.parse.urljoin(url, j['src']), soup.find('script', src=re.compile(r'.+')))
+        css = map(lambda c: urllib.parse.urljoin(url, c['link']), soup.find('link', rel=re.compile(r'stylesheet')))
+        return js, css
+

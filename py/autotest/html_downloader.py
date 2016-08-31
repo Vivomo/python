@@ -24,3 +24,6 @@ class HtmlDownloader(object):
             return read.decode(decode)
         else:
             return read
+
+    def ping_success(self, url):
+        return request.urlopen(url).getcode() == 200

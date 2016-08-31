@@ -39,6 +39,15 @@ class AutoTest(object):
         check js & css of root_url
         :return:
         """
+        html_content = self.downloader.download(self.config['url'])
+        js, css = self.parser.resource_parse(html_content)
+        for j in js:
+            if not self.downloader.ping_success(j):
+                print('%s can\'t load' % j)
+        for c in css:
+            if not self.downloader.ping_success(c):
+                print('%s can\'t load' % c)
+
 
 
 
@@ -73,5 +82,6 @@ if __name__ == '__main__':
         data = json.loads(jsonFile.read())
         at = AutoTest(data)
         at.freemarker_check()
+        at.resources_check()
 
 input('')
