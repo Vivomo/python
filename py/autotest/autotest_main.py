@@ -1,9 +1,6 @@
-import http.client
-import http.cookiejar
 import re
 from urllib import request, parse
 import json
-from urllib.request import urlopen, Request
 from py.autotest import url_manager, html_downloader, html_parser
 
 
@@ -57,18 +54,11 @@ class AutoTest(object):
         print('js & css check over')
 
     def login(self):
-        _data = {
+        self.downloader.login({
             'username': self.config['id'],
             'password': self.config['pw']
-        }
-        post_data = parse.urlencode(_data).encode()
-        resp = request.urlopen(parse.urljoin(self.config['url'], self.config['login_url']), data=post_data)
-        cookie = []
-        headers = resp.headers._headers
-        for k, v in headers:
-            if k == 'Set-Cookie':
-                cookie.append(re.search(r'\w+=.+?;', v).group())
-        self.downloader.cookie_str = ' '.join(cookie)
+        }, parse.urljoin(self.config['url'], self.config['login_url']))
+
 
 if __name__ == '__main__':
     with open('data.json', 'r', encoding='utf-8') as jsonFile:

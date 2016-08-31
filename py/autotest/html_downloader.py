@@ -1,4 +1,6 @@
 from urllib.request import Request, urlopen
+from urllib import parse
+import re
 import http.client
 
 
@@ -33,3 +35,18 @@ class HtmlDownloader(object):
 
     def ping_success(self, url):
         return urlopen(url).getcode() == 200
+
+    def login(self, login_data, login_url):
+
+        post_data = parse.urlencode(login_data).encode()
+        resp = urlopen(login_url, data=post_data)
+        if resp.getcode() == 200:
+            print('login success')
+        else:
+            print('login failed')
+        cookie = []
+        headers = resp.headers._headers
+        for k, v in headers:
+            if k == 'Set-Cookie':
+                cookie.append(re.search(r'\w+=.+?;', v).group())
+        self.cookie_str = ' '.join(cookie)
