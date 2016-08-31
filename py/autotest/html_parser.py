@@ -40,10 +40,6 @@ class HtmlParser(object):
             print('发现freeMark异常, 链接是%s' % url)
         return res_data
 
-
-    def get_index_theme(self, url, soup):
-        pass
-
     def cross_domain_filter(self, link):
         href = link['href']
         return href.find('http') == -1 or href.find(self.root_url) != -1
@@ -53,7 +49,9 @@ class HtmlParser(object):
         if html_content is None:
             return
         soup = BeautifulSoup(html_content, 'html.parser', from_encoding='utf-8')
-        js = map(lambda j: urllib.parse.urljoin(url, j['src']), soup.find('script', src=re.compile(r'.+')))
-        css = map(lambda c: urllib.parse.urljoin(url, c['link']), soup.find('link', rel=re.compile(r'stylesheet')))
+        js = map(lambda j: urllib.parse.urljoin(url, j['src']),
+                 [j for j in soup.find_all('script', src=re.compile(r'.+'))])
+        css = map(lambda c: urllib.parse.urljoin(url, c['href']),
+                  [c for c in soup.find_all('link', rel=re.compile(r'.+'))])
         return js, css
 

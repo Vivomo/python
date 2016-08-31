@@ -42,13 +42,19 @@ class AutoTest(object):
         :return:
         """
         html_content = self.downloader.download(self.config['url'])
-        js, css = self.parser.resource_parse(html_content)
+        js, css = self.parser.resource_parse(self.config['url'], html_content)
         for j in js:
-            if not self.downloader.ping_success(j):
+            if self.downloader.ping_success(j):
+                print(j)
+            else:
                 print('%s can\'t load' % j)
+
         for c in css:
-            if not self.downloader.ping_success(c):
+            if self.downloader.ping_success(c):
+                print(c)
+            else:
                 print('%s can\'t load' % c)
+        print('js & css check over')
 
     def login(self):
         _data = {
@@ -68,8 +74,8 @@ if __name__ == '__main__':
     with open('data.json', 'r', encoding='utf-8') as jsonFile:
         data = json.loads(jsonFile.read())
         at = AutoTest(data)
-        at.login()
-        at.freemarker_check()
+        # at.login()
+        # at.freemarker_check()
         at.resources_check()
 
 input('')
