@@ -1,4 +1,7 @@
 {
     "url" : "http://www.360paobu.com/",
-    "deep" : 3
+    "deep" : 3,
+    "id" : "000000@qq.com",
+    "pw" : "000000",
+    "login_url" : "/rest/user/login"
 }

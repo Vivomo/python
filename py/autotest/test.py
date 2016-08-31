@@ -1,5 +1,6 @@
 import json
 import re
+from urllib import request, parse
 from bs4 import BeautifulSoup
 
 from py.autotest import  html_parser, html_downloader
@@ -7,11 +8,14 @@ from py.autotest import  html_parser, html_downloader
 #     content = f.read()
 #     print(json.loads(content))
 
-downloader = html_downloader.HtmlDownloader()
-content = downloader.download('http://vimo.360jlb.cn', 'html.parser', from_encoding='utf-8')
-soup = BeautifulSoup(content)
-# print(soup.get_text())
-print('/////////////////////////////////////////////////////////////////////////////////')
-print(soup.getText())
+data = {
+    'username' : 'wbtest1@163.com',
+    'password' : '123456'
+}
+postData = parse.urlencode(data).encode()
+resp = request.urlopen('http://www.360paobu.com/rest/user/login', data=postData)
+
+print(type(resp.headers))
+
 
 

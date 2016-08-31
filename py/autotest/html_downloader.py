@@ -1,16 +1,22 @@
-from urllib import request
+from urllib.request import Request, urlopen
 import http.client
 
 
 class HtmlDownloader(object):
-    @staticmethod
-    def download(url, decode=''):
 
-        if not url:
-            return None
-        if not url.startswith('http://'):
-            url += 'http://'
-        response = request.urlopen(url)
+    def __init__(self):
+        self.cookie_str = ''
+
+    def download(self, url, decode=''):
+
+        # if not url:
+        #     return None
+        # if not url.startswith('http://'):
+        #     url += 'http://'
+        req = Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0')
+        req.add_header('Cookie', self.cookie_str)
+        response = urlopen(req)
 
         if response.getcode() != 200:
             return None
@@ -26,4 +32,4 @@ class HtmlDownloader(object):
             return read
 
     def ping_success(self, url):
-        return request.urlopen(url).getcode() == 200
+        return urlopen(url).getcode() == 200

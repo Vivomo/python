@@ -1,7 +1,9 @@
 import http.client
 import http.cookiejar
+import re
+from urllib import request, parse
 import json
-from urllib import request
+from urllib.request import urlopen, Request
 from py.autotest import url_manager, html_downloader, html_parser
 
 
@@ -48,39 +50,25 @@ class AutoTest(object):
             if not self.downloader.ping_success(c):
                 print('%s can\'t load' % c)
 
-
-
-
-
-def get_url_content(url):
-    if not url:
-        return None
-    if not url.startswith('http://'):
-        url += 'http://'
-    response = request.urlopen(url)
-
-    if response.getcode() != 200:
-        return None
-
-    try:
-        read = response.read().decode('utf-8')
-    except http.client.IncompleteRead as icread:
-        read = icread.partial.decode('utf-8')
-
-    return read
-
-
-
-# def
-
-#
-# for u in get_urls():
-#     check_freemarker_error(u, get_url_content(u))
+    def login(self):
+        _data = {
+            'username': self.config['id'],
+            'password': self.config['pw']
+        }
+        post_data = parse.urlencode(_data).encode()
+        resp = request.urlopen(parse.urljoin(self.config['url'], self.config['login_url']), data=post_data)
+        cookie = []
+        headers = resp.headers._headers
+        for k, v in headers:
+            if k == 'Set-Cookie':
+                cookie.append(re.search(r'\w+=.+?;', v).group())
+        self.downloader.cookie_str = ' '.join(cookie)
 
 if __name__ == '__main__':
     with open('data.json', 'r', encoding='utf-8') as jsonFile:
         data = json.loads(jsonFile.read())
         at = AutoTest(data)
+        at.login()
         at.freemarker_check()
         at.resources_check()
 
