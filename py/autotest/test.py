@@ -4,6 +4,8 @@ from urllib import request, parse
 from bs4 import BeautifulSoup
 
 from py.autotest import  html_parser, html_downloader
+
+
 # with open('data.json', 'r', encoding='utf-8') as f:
 #     content = f.read()
 #     print(json.loads(content))

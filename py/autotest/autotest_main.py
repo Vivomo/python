@@ -1,5 +1,4 @@
-import re
-from urllib import request, parse
+from urllib import parse
 import json
 from py.autotest import url_manager, html_downloader, html_parser
 
@@ -64,8 +63,8 @@ if __name__ == '__main__':
     with open('data.json', 'r', encoding='utf-8') as jsonFile:
         data = json.loads(jsonFile.read())
         at = AutoTest(data)
-        # at.login()
-        # at.freemarker_check()
+        at.login()
+        at.freemarker_check()
         at.resources_check()
 
 input('')
