@@ -1,7 +1,6 @@
 import re
 import urllib.parse
 from bs4 import BeautifulSoup
-from py.autotest import html_downloader
 
 
 class HtmlParser(object):
