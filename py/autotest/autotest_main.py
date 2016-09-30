@@ -2,7 +2,7 @@ from urllib import parse
 import json
 # from py.autotest import url_manager, html_downloader, html_parser, html_outputer
 # noinspection PyUnresolvedReferences
-from . import url_manager, html_downloader, html_parser, html_outputer
+import url_manager, html_downloader, html_parser, html_outputer
 
 
 class AutoTest(object):
@@ -25,12 +25,12 @@ class AutoTest(object):
                 u = self.urls.get_new_url()
                 collected = False
                 try:
+                    print(u)
                     html_content = self.downloader.download(u)
                     new_urls, new_data = self.parser.parse(u, html_content)
                     temp_set |= new_urls
                     self.outputer.collect_data(new_data)
                     collected = True
-                    print(u)
                 except BaseException as e:
                     print('craw %s failed, result %s ' % (u, e))
                     if not collected:
