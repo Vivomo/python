@@ -82,5 +82,3 @@ if __name__ == '__main__':
         at.freemarker_check()
         at.resources_check()
         at.outputer.output_html()
-
-input('')
