@@ -1,2 +1,25 @@
 f=global
-l_search_goods|Search gooods|搜索商品
+l_purchase_info|Purchase information|购买信息
+l_subtotal|Subtotal|小计
+l_operation|Operation|操作
+l_invalid|Invalid|失效
+l_view|view|查看
+l_select_all|Select all|全选
+l_select_all|Select all|删除所选类目
+l_remove_invalid_items|Remove invalid items|移除失效类目
+l_statements|Statements|结算
+l_sign_up_for_activities|Sign up for activities|去报名活动
+l_purchase goods|Purchase goods|去选购商品
+l_loading_cart_data...|Loading cart data...|正在读取购物车信息
+l_cart_empty_tip|Your shopping cart is empty, so hurry up! You can|您的购物车暂时是空的，赶紧行动起来！您可以
+l_view_event_apply_details|View event apply details|查看报名详情
+l_confirm_order|Confirming order|确认订单
+l_total_amount|Total amount|商品合计
+l_event_subtotal|Event subtotal|活动小计
+l_confirming_order|Confirming order|确认购买
+l_back_to_view_cart|Back to view cart|返回购物车
+l_generating_orders_tip|Generating orders, please wait for a moment|正在生成订单, 请稍等
+==========================================
+|已选择{{}}件already select:
+|使用{{}}积分抵扣{{}}Use ? points to deduct ?
+|最多抵扣 <em>${useCreditPoints}</em>积分, 折算 <em class="price rmb">${useCreditPointsMoney}</em>mostly deduct ? points,translated into the ones ?
