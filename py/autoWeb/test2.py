@@ -1,10 +1,8 @@
 from splinter.browser import Browser
 from selenium import webdriver
 
+chromeDriverPath = r'C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe'
+driver = webdriver.Chrome(executable_path=chromeDriverPath)
+driver.find_element_by_class_name('').f
 
-options = webdriver.ChromeOptions()
-options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
-
-browser = Browser('chrome', options=options)
-
-browser.visit('http://www.google.com')
+driver.get('http://vimo.360jlb.cn')
