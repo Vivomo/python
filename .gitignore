@@ -1,2 +1,3 @@
 py/autotest/output.html
 *.pyc
+src/ignore/
