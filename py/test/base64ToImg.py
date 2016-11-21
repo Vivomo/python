@@ -1,7 +1,7 @@
 import os
 from py.utils import IO_util
 
-writePath = r'E:\git\pythonCode\src\theme'
+# writePath = r'E:\git\pythonCode\src\theme'
 writePath2 = r'E:\SHT\project\sas-web\src\main\webapp\res\img\theme'
 base64FilePath = r'E:\git\pythonCode\src\base64.txt'
 

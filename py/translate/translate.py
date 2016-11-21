@@ -112,8 +112,21 @@ def fetch_chinese(file_list):
                 w_file_en.write(''.join(w_content_en))
 
 
+def get_chinese(file_list):
+
+    chinese = set()
+    for path in file_list:
+        with open(path, 'r', encoding='utf-8') as r_file:
+            for line in r_file.readlines():
+                chinese = chinese | set(re.findall(chineseReg, line))
+    chinese = list(chinese)
+    # formatted_translate = format_translate()
+
 # fileList = get_all_file(readPath)
 # fetch_chinese(fileList)
+
+fileList = []
+
 
 
 
