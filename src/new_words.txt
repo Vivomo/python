@@ -1,2 +1,27 @@
 f=recruits
-l_recruitment|Recruitment|招聘
+l_recruit|recruit|招聘
+l_job_responsibilities|Job responsibilities|岗位职责
+l_male|male|男
+l_gender|Gender|性别
+l_full_name|Full name|姓名
+l_recruitment_number|Recruitment number|招聘人数
+l_optional|Optional|选填
+l_highest_degree|Highest degree|最高学历
+l_confirm_delivery|Confirm delivery|确认投递
+l_job_requirements|Job requirements|岗位要求
+l_position_list|Position list|职位列表
+l_hands-on_background|Hands-on background|工作经验
+l_delivery_resume|Delivery resume|投递简历
+l_my_resume|My resume|我的简历
+l_female|female|女
+l_personal_information|Personal information|个人信息
+l_education_requirements|Education requirements|学历要求
+l_please_input|Please input|请输入
+l_upload_attachments|Upload attachments|上传附件
+l_mobile_phone|Mobile phone|手机
+l_please_enter_your_phone_number|Please enter your phone number|请输入手机号
+l_host_city|Host city|所在城市
+l_please_fill_in_your_name|Please fill in your name|请填写姓名
+l_monthly_salary_range|monthly salary range|月薪范围
+l_please_enter_the_city|Please enter the city|请输入所在城市
+l_fill_in_personal_information|Fill in personal information|填写个人信息
