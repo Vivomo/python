@@ -12,7 +12,7 @@ readPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\defau
 # writePathEn = r'E:\git\pythonCode\test\translate\write\en'
 writePathZh = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\zh'
 writePathEn = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
-newWordPath = r'E:\git\pythonCode\src\new_words.txt'
+newWordPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\temp\new_words.txt'
 chineseReg = u"[\u4e00-\u9fa5\u3040-\u309f\u30a0-\u30ff]+"
 
 
@@ -121,10 +121,7 @@ def get_chinese(file_list):
         with open(path, 'r', encoding='utf-8') as r_file:
             for line in r_file.readlines():
                 chinese = chinese | set(re.findall(chineseReg, line))
-    chinese = list(chinese)
-    translate_result = translate_word('\n'.join(chinese))
-    write_into_new_word(translate_result, 'recruits')
-    # formatted_translate = format_translate()
+    return list(chinese)
 
 
 def word_to_variable(word):
@@ -145,7 +142,8 @@ fileList = [
     r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default\recruit_job_view.ftl',
     r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default\recruit_jobs.ftl']
 
-get_chinese(fileList)
 
+translateResult = translate_word('\n'.join(get_chinese(fileList)))
+write_into_new_word(translateResult, 'recruits')
 
 
