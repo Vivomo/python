@@ -2,9 +2,9 @@ import os
 import re
 
 from py.utils import IO_util
-from . import line
+from py.translate import line
 
-newWordsPath = r'../../src/new_words.txt'
+newWordsPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\temp\new_words.txt'
 fileNameReg = re.compile(r'f=(\w+)')
 wordReg = re.compile(r'(l_\w+)\|(.+?)\|(.+)')
 assignReg = re.compile(r'<#assign')
@@ -33,6 +33,9 @@ def get_words_dict(file_path, check_path=''):
                 }
             else:
                 result = re.search(wordReg, l)
+                if result is None:
+                    print(l)
+                    continue
                 groups = result.groups()
                 ch = groups[2]
                 if result and file_name in words_dict and ch not in chinese:
