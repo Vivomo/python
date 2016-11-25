@@ -1,3 +1,5 @@
+import json
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -26,12 +28,12 @@ class Task(object):
         self.wait.until(self.dom_ready)
         apply_elem = driver.find_element_by_class_name('join')
         apply_elem.click()
+        # TODO 填值 报名
 
     def login(self, username, password):
         driver = self.driver
         login_url = self.domain + '/login'
         driver.get(login_url)
-        # time.sleep(2)
         form = driver.find_element_by_class_name('loginform')
         e_username = form.find_element_by_name('username')
         e_password = form.find_element_by_name('password')
@@ -43,5 +45,7 @@ class Task(object):
 task = Task({
     'domain': 'http://vm.360jlb.cn'
 })
-task.login('929992114@qq.com', '000000')
+with open('../src/ignore/data.json', 'r', encoding='utf-8') as jsonFile:
+    data = json.loads(jsonFile.read())
+task.login(data['username'], data['password'])
 task.event_signup(35712)
