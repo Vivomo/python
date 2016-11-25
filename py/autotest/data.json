@@ -1,7 +1,0 @@
-{
-    "url" : "http://wb.360paobu.com/",
-    "deep" : 2,
-    "id" : "wbtest1@163.com",
-    "pw" : "123456",
-    "login_url" : "/rest/user/login"
-}

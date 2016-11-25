@@ -1,3 +1,4 @@
 py/autotest/output.html
 *.pyc
 src/ignore/
+py/autotest/data.json
