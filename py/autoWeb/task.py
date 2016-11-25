@@ -45,7 +45,7 @@ class Task(object):
 task = Task({
     'domain': 'http://vm.360jlb.cn'
 })
-with open('../src/ignore/data.json', 'r', encoding='utf-8') as jsonFile:
+with open('../../src/ignore/data.json', 'r', encoding='utf-8') as jsonFile:
     data = json.loads(jsonFile.read())
-task.login(data['username'], data['password'])
+task.login(data['id'], data['pw'])
 task.event_signup(35712)
