@@ -1,5 +1,5 @@
 from PIL import Image
 import pytesseract
 
-image = Image.open('E:\git\pythonCode\src\img\qqjt1.png')
-print(pytesseract.image_to_string(image))
+image2 = Image.open('E:\git\pythonCode\src\img\captcha.jpg')
+print(pytesseract.image_to_string(image2))
