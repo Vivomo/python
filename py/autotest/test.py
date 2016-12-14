@@ -10,10 +10,8 @@ from py.autotest import  html_parser, html_downloader
 #     content = f.read()
 #     print(json.loads(content))
 
-data = {
-    'username' : 'wbtest1@163.com',
-    'password' : '123456'
-}
+with open('data.json', 'r', encoding='utf-8') as jsonFile:
+    data = json.loads(jsonFile.read())
 postData = parse.urlencode(data).encode()
 resp = request.urlopen('http://www.360paobu.com/rest/user/login', data=postData)
 

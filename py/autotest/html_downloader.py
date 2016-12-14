@@ -18,7 +18,7 @@ class HtmlDownloader(object):
         req = Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0')
         req.add_header('Cookie', self.cookie_str)
-        response = urlopen(req)
+        response = urlopen(req, timeout=10)
 
         if response.getcode() != 200:
             return None

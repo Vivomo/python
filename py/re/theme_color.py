@@ -12,7 +12,8 @@ def get_theme_old():
     theme_color = []
 
     for path in IO_util.get_all_file(file_path):
-        if path.find('theme') != -1:
+        if path.find('0000') != -1:
+        # if path.find('theme200000') != -1 or path.find('theme100000') != -1 or path.find('theme2000010') != -1:
             with open(path, 'r', encoding='utf-8') as file:
                 for line in file.readlines():
                     result = theme4Reg.search(line)
@@ -39,5 +40,7 @@ def get_theme_new():
 
 
 defaultColor = '#29d8c3'
-print(defaultColor + ',' + ','.join(get_theme_new()))
+oldColors = get_theme_old()
+print(len(oldColors))
+print(','.join(oldColors))
 

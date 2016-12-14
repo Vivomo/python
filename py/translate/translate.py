@@ -12,7 +12,9 @@ readPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\defau
 # writePathEn = r'E:\git\pythonCode\test\translate\write\en'
 writePathZh = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\zh'
 writePathEn = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\en'
+newWordPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\temp\new_words.txt'
 chineseReg = u"[\u4e00-\u9fa5\u3040-\u309f\u30a0-\u30ff]+"
+
 
 appid = '20160607000022958'
 secretKey = 'lCxFBKsQHEvNw7RRFapW'
@@ -112,9 +114,36 @@ def fetch_chinese(file_list):
                 w_file_en.write(''.join(w_content_en))
 
 
+def get_chinese(file_list):
+
+    chinese = set()
+    for path in file_list:
+        with open(path, 'r', encoding='utf-8') as r_file:
+            for line in r_file.readlines():
+                chinese = chinese | set(re.findall(chineseReg, line))
+    return list(chinese)
+
+
+def word_to_variable(word):
+    return 'l_'+word.lower().replace(' ', '_')
+
+
+def write_into_new_word(translate_result, filename='global'):
+    content = ['f=%s' % filename]
+    with open(newWordPath, 'w', encoding='utf-8') as file:
+        for result in translate_result:
+            content.append('%s|%s|%s' % (word_to_variable(result['dst']), result['dst'], result['src']))
+        file.writelines('\n'.join(content))
+
 # fileList = get_all_file(readPath)
 # fetch_chinese(fileList)
 
+fileList = [
+    r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default\recruit_job_view.ftl',
+    r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default\recruit_jobs.ftl']
 
+
+translateResult = translate_word('\n'.join(get_chinese(fileList)))
+write_into_new_word(translateResult, 'recruits')
 
 

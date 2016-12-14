@@ -1,6 +1,7 @@
 import os
 import base64
 
+
 def get_all_file(file_path):
     """
     获取一个路径下的所有文件

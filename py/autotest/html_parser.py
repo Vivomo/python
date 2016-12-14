@@ -1,7 +1,6 @@
 import re
 import urllib.parse
 from bs4 import BeautifulSoup
-from py.autotest import html_downloader
 
 
 class HtmlParser(object):
@@ -21,7 +20,7 @@ class HtmlParser(object):
         new_urls = set()
         # /view/123.htm
         # links = soup.find_all('a', href=re.compile(r'(?!javascript)'))
-        links = filter(self.cross_domain_filter, soup.find_all('a', href=re.compile(r'.*?/.*')))
+        links = filter(self.cross_domain_filter, soup.find_all('a', href=re.compile(r'^[^\{}]+?/[^\{}]+$')))
         for link in links:
             new_url = link['href']
             new_full_url = urllib.parse.urljoin(url, new_url)

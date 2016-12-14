@@ -1,0 +1,16 @@
+1477555104382	addons.xpi	WARN	Ignoring missing add-on in C:\Program Files (x86)\PremierOpinion\firefox
+1477555105100	addons.xpi	WARN	Exception running bootstrap method install on loop@mozilla.org: [Exception... "Component returned failure code: 0x8000ffff (NS_ERROR_UNEXPECTED) [nsIPrefBranch.getBoolPref]"  nsresult: "0x8000ffff (NS_ERROR_UNEXPECTED)"  location: "JS frame :: resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///C:/Users/ui/AppData/Roaming/Mozilla/Firefox/Profiles/ptid50z1.default/features/%7B3bdcf280-85cb-4675-be31-1c773087e258%7D/loop@mozilla.org.xpi!/bootstrap.js :: install :: line 21"  data: no] Stack trace: install()@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///C:/Users/ui/AppData/Roaming/Mozilla/Firefox/Profiles/ptid50z1.default/features/%7B3bdcf280-85cb-4675-be31-1c773087e258%7D/loop@mozilla.org.xpi!/bootstrap.js:21 < this.XPIProvider.callBootstrapMethod()@resource://gre/modules/addons/XPIProvider.jsm:4675 < processFileChanges()@resource://gre/modules/addons/XPIProvider.jsm -> resource://gre/modules/addons/XPIProviderUtils.js:2129 < this.XPIProvider.checkForChanges()@resource://gre/modules/addons/XPIProvider.jsm:3620 < this.XPIProvider.startup()@resource://gre/modules/addons/XPIProvider.jsm:2622 < callProvider()@resource://gre/modules/AddonManager.jsm:227 < _startProvider()@resource://gre/modules/AddonManager.jsm:755 < AddonManagerInternal.startup()@resource://gre/modules/AddonManager.jsm:938 < this.AddonManagerPrivate.startup()@resource://gre/modules/AddonManager.jsm:2773 < amManager.prototype.observe()@resource://gre/components/addonManager.js:57
+console.error: commonfix: 
+  Message: ReferenceError: reason is not defined
+  Stack:
+    exports.onUnload@resource://gre/modules/commonjs/toolkit/loader.js -> resource://commonfix-at-mozillaonline-dot-com/commonfix/lib/main.js:316:1
+unload/<@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/system/unload.js:58:7
+unload@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/system/unload.js:56:3
+onunload@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/system/unload.js:77:5
+Observer<.observe@resource://gre/modules/commonjs/toolkit/loader.js -> resource://gre/modules/commonjs/sdk/system/events.js:81:7
+unload@resource://gre/modules/commonjs/toolkit/loader.js:795:3
+shutdown@resource://gre/modules/addons/XPIProvider.jsm -> jar:file:///C:/Users/ui/AppData/Roaming/Mozilla/Firefox/Profiles/ptid50z1.default/extensions/commonfix@mozillaonline.com.xpi!/bootstrap.js:303:5
+this.XPIProvider.callBootstrapMethod@resource://gre/modules/addons/XPIProvider.jsm:4675:9
+this.XPIProvider.startup/<.observe@resource://gre/modules/addons/XPIProvider.jsm:2715:15
+
+1477555202081	addons.xpi	WARN	Ignoring missing add-on in C:\Program Files (x86)\PremierOpinion\firefox
