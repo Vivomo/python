@@ -2,6 +2,7 @@ from random import randrange, choice
 from string import ascii_lowercase as lc
 from sys import maxsize
 from time import ctime
+import re
 
 
 def test1():
@@ -16,4 +17,7 @@ def test1():
         print('%s::%s@%s.%s::%d-%d-%d' % (dtstr, login, dom, choice(tlds), dtint, llen, dlen))
 
 
-test1()
+reg = re.compile('^[^_]\w*\.(sass|less|scss)$')
+
+print(reg.match('a_a.scss'))
+print(reg.match('_a.scss'))
