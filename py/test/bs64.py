@@ -17,4 +17,4 @@ while True:
     if filePath == '886':
         break
     else:
-        clip(img_to_base64(filePath))
+        print(img_to_base64(filePath))
