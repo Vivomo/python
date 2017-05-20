@@ -4,12 +4,12 @@ import urllib.parse
 import random
 import json
 
-m1 = hashlib.md5()
 appid = '20160607000022958'
 secretKey = 'lCxFBKsQHEvNw7RRFapW'
 
 
 def translate_word(words, from_lang='en', to_lang='zh'):
+    m1 = hashlib.md5()
     http_client = None
     salt = random.randint(32768, 65536)
     sign = bytes(appid + words + str(salt) + secretKey, encoding='utf-8')
@@ -30,4 +30,4 @@ def translate_word(words, from_lang='en', to_lang='zh'):
         if http_client:
             http_client.close()
 
-print(translate_word('apple\norange'))
+print(translate_word('♏This is an apple.\nThat\'s an orange'))

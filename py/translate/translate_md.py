@@ -20,6 +20,7 @@ class Translator(object):
 
     needless = [mdReg1]
     placeholder = '♏'
+    wordReg = '\w+'
 
     def __init__(self, cfg):
         self.config = cfg
@@ -36,10 +37,14 @@ class Translator(object):
         for reg in self.needless:
             needless_str += re.findall(reg, _line)
             _line = re.sub(reg, self.placeholder, _line)
+
+        is_valid = bool(re.search(self.wordReg))
+
         return {
             'raw': line,
             'result': _line,
-            'needless': needless_str
+            'needless': needless_str,
+            'isValid': is_valid
         }
 
 config = {
@@ -50,4 +55,5 @@ config = {
 tl = Translator(config)
 tl.translate()
 
+''.replace()
 
