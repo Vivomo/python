@@ -4,8 +4,11 @@ import urllib.parse
 import random
 import json
 
-appid = '20160607000022958'
-secretKey = 'lCxFBKsQHEvNw7RRFapW'
+from py.utils import IO_util
+
+cfg = IO_util.get_json('../../private_config/baidu_translate_key.json')
+appid = cfg['appid']
+secretKey = cfg['secretKey']
 
 
 def translate_word(words, from_lang='en', to_lang='zh'):

@@ -7,6 +7,8 @@ import random
 import json
 
 # readPath = r'E:\git\pythonCode\test\translate\read'
+from py.utils import IO_util
+
 readPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\template\default'
 # writePathZh = r'E:\git\pythonCode\test\translate\write\zh'
 # writePathEn = r'E:\git\pythonCode\test\translate\write\en'
@@ -16,8 +18,9 @@ newWordPath = r'E:\SHT\project\sas-web\src\main\webapp\WEB-INF\views\lang\temp\n
 chineseReg = u"[\u4e00-\u9fa5\u3040-\u309f\u30a0-\u30ff]+"
 
 
-appid = '20160607000022958'
-secretKey = 'lCxFBKsQHEvNw7RRFapW'
+cfg = IO_util.get_json('../../private_config/baidu_translate_key.json')
+appid = cfg['appid']
+secretKey = cfg['secretKey']
 
 
 def get_all_file(file_path):

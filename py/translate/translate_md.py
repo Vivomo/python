@@ -14,6 +14,9 @@ from py.utils import IO_util
 """
 
 mdReg1 = re.compile('\[.+?\]\s*\(.+?\)')
+cfg = IO_util.get_json('../../private_config/baidu_translate_key.json')
+appid = cfg['appid']
+secretKey = cfg['secretKey']
 
 
 class Translator(object):
@@ -52,8 +55,7 @@ config = {
     'ignoreWords': ['React']
 }
 
-tl = Translator(config)
-tl.translate()
+# tl = Translator(config)
+# tl.translate()
 
-''.replace()
 

@@ -1,3 +1,4 @@
+import json
 import os
 import base64
 
@@ -57,3 +58,9 @@ def img_to_base64(file_path):
 def clip(s):
     command = 'echo ' + s.strip() + '| clip'
     os.system(command)
+
+
+def get_json(file_path, to_dict=True):
+    with open(file_path, 'r') as file:
+        content = file.read()
+        return json.loads(content) if to_dict else content
