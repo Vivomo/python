@@ -1,3 +1,4 @@
-# python
-一些小工具,记录学习python的旅程
-nothing
+# Python写的一些小工具, 也有平时写着玩的代码
+## 也算是记录学习Python的旅程
+
+### 所有代码的执行版本 `Python 3.4+`

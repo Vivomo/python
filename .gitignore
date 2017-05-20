@@ -3,3 +3,4 @@ py/autotest/output.html
 src/ignore/
 py/autotest/data.json
 .idea/*
+private_config/*
