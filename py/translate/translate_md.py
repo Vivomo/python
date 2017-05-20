@@ -19,26 +19,27 @@ mdReg1 = re.compile('\[.+?\]\s*\(.+?\)')
 class Translator(object):
 
     needless = [mdReg1]
+    placeholder = '♏'
 
     def __init__(self, cfg):
         self.config = cfg
         with open(cfg['filePath'], 'r', encoding='utf-8') as file:
-            print(len(file.readlines()))
-
-        pass
+            self.task = map(self.parse, file.readlines())
 
     def translate(self):
-        print(self.config)
+        translate_content = map(lambda obj: obj['result'], self.task)
+        print('\n'.join(translate_content))
 
     def parse(self, line):
         _line = line.strip()
-        count = 0
-        flag = []
+        needless_str = []
         for reg in self.needless:
-            _line = _line.sub(reg, '~%d' % count, _line)
+            needless_str += re.findall(reg, _line)
+            _line = re.sub(reg, self.placeholder, _line)
         return {
             'raw': line,
-            'result': _line
+            'result': _line,
+            'needless': needless_str
         }
 
 config = {
@@ -47,4 +48,6 @@ config = {
 }
 
 tl = Translator(config)
-# tl.translate()
+tl.translate()
+
+
