@@ -2,5 +2,7 @@ py/autotest/output.html
 *.pyc
 src/ignore/
 py/autotest/data.json
-.idea/*
-private_config/*
+.idea/
+private_config/
+py/__pycache__/
+res/
