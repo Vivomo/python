@@ -5,6 +5,8 @@ pip install virtualenv
 ### 新建一个虚拟环境
 ```
 virtualenv dirname
+制定版本
+virtualenv -p (python.exe的路径) virname
 ```
 ### 进入虚拟环境
 ```
