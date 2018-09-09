@@ -6,13 +6,9 @@ files = get_all_file(filePath)
 duration = 0
 for f in files:
     if f.endswith('.mp4'):
-        print(f)
-        try:
-            clip = VideoFileClip(f)
-            duration += clip.duration
-            print(clip.duration)  # seconds
-            clip.close()
-        except Exception as e:
-            print(e)
+        clip = VideoFileClip(f)
+        duration += clip.duration
+        print(f, clip.duration)  # seconds
+        clip.close()
 
 print(duration / 60)
