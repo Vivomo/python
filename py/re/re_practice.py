@@ -40,7 +40,7 @@ def re_practice3():
     """
     匹配email
     """
-    re.match('(\w+.)*\w+@(\w+.)*\w+.(\w+.)*\w+', '929992114@qq.com')
+    re.match('(\w+.)*\w+@(\w+.)*\w+.(\w+.)*\w+', '12345688@qz.com')
     """
     匹配url
     TODO 待完善
